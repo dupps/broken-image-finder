@@ -1,1 +1,0 @@
-{"license": "", "description": "Extension of the Toolbar Button library by Eric Vold, combined multiple efforts into one library.", "contributors": [], "author": "Systemcluster", "url": "", "dependencies": ["vold-utils", "api-utils"], "version": "0.1.rev30", "lib": "lib", "fullName": "Toolbarbutton Extended", "main": "lib/index", "id": 162259, "name": "toolbarbutton-extended"}
