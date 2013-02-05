@@ -12,8 +12,8 @@
   "preferences": [
     {
       "name": "alert403",
-      "title": "Alert 403 status codes?",
-      "description": "Should 403 status codes be displayed in the notification popup?",
+      "title": "Alert 403 Status Codes?",
+      "description": "Should 403 Status Codes be displayed in the notification popup?",
       "type": "bool",
       "value": false
     },
@@ -27,7 +27,7 @@
     {
       "name": "firstRun",
       "title": "Is the Toolbar Button displayed properly?",
-      "description": "Uncheck to reset toolbar button.",
+      "description": "Uncheck to reset Toolbar Button after restart.",
       "type": "bool",
       "value": false
     }
