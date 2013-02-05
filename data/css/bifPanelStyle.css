@@ -1,0 +1,98 @@
+body {
+  width: 100%;
+  color: #333;
+  overflow: hidden;
+  font-family: Verdana, Arial, sans serif;
+  font-size: 12px;
+  background: url(../img/grid.gif) 0 0;
+}
+
+body .hidden {
+  display: none;
+}
+
+body > header {
+  padding: 8px;
+  border-bottom: 1px #e1e1e1 solid;
+  height: 14px;
+  font-weight: bold;
+  background: -moz-linear-gradient(top, #ffffff 0%, #f1f1f1 50%, #e1e1e1 51%, #f6f6f6 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(50%,#f1f1f1), color-stop(51%,#e1e1e1), color-stop(100%,#f6f6f6)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* IE10+ */
+  background: linear-gradient(top, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* W3C */
+}
+
+#results {
+  overflow-y: scroll;
+  height: 385px;
+}
+
+#results .noResultMessage {
+  padding-left: 8px;
+  color: #808080;
+}
+
+#results .resultElement {
+  min-height: 12px;
+  font-size: 10px;
+}
+
+#results .resultElement:not(:last-child) {
+  padding: 2px 0;
+  border-bottom: 1px solid #666;
+}
+
+#results .resultElement span {
+  display: block;
+  float: left;
+  padding: 1px 4px;
+}
+
+#results .resultElement span.url {
+  width: 190px;
+  padding-left: 8px;
+  /* http://stackoverflow.com/questions/3695435/crop-text-too-long-inside-div */
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#results .resultElement div.exception {
+  width: 270px;
+  padding-left: 8px;
+}
+
+#results .resultElement span.status {
+  font-weight: bold;
+  color: #4444ff;
+}
+
+#results .resultElement span.status.error-404 {
+  color: #ff2222;
+}
+
+#results .resultElement span.moreinfo {
+  color: #000055;
+  text-decoration: underline;
+}
+
+#results .resultElement span.moreinfo:hover {
+  cursor: pointer;
+}
+
+#results .resultElement .details {
+  clear: left;
+  background: white;
+  border-radius: 4px;
+  border: 1px #bbb solid;
+  padding: 4px;
+  margin: 3px 8px;
+}
+
+#results .resultElement .details span {
+  float: none;
+  padding: 2px;
+  word-wrap: break-word;
+}
