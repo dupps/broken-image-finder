@@ -5,11 +5,18 @@
   "description": "The scope of the Broken Image Finder Add-On is to detect unavailable images by scanning the currently visited website and its embedded stylesheets.",
   "author": "Bastian Dupps",
   "license": "MPL 2.0/LGPL 2.1",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "icon": "icon.png",
   "icon64": "icon64.png",
   "homepage": "http://dupps.it/broken-image-finder/",
   "preferences": [
+    {
+      "name": "doNotify",
+      "title": "Show the notification popup?",
+      "description": "Only disable if you don't want to get notified.",
+      "type": "bool",
+      "value": true
+    },
     {
       "name": "alert403",
       "title": "Alert 403 Status Codes?",

@@ -89,9 +89,19 @@ if (self) {
 
   });
 
+  self.port.on('showPopup', function (prefNotify) {
+
+    showPopup = prefNotify;
+
+  });
+
   self.port.on('brokenImageFound', function (url) {
 
-    BIF.Notification.showBrokenImageError(url);
+    if (showPopup === true) {
+
+      BIF.Notification.showBrokenImageError(url);
+
+    }
 
   });
 
@@ -313,6 +323,13 @@ BIF.Notification = {
         infoDiv.style.right = '30px';
         infoDiv.style.padding = '10px';
 
+        infoDiv.style.maxWidth = '180px';
+        infoDiv.style.overflow = 'hidden';
+        infoDiv.style.whiteSpace = 'nowrap';
+        infoDiv.style.textOverflow = 'ellipsis';
+        infoDiv.style.direction = 'rtl';
+        infoDiv.style.textAlign = 'right';
+
         infoDiv.style.color = '#d8000c';
         infoDiv.style.backgroundColor = '#ffbaba';
         infoDiv.style.opacity = '0.9';
@@ -324,7 +341,6 @@ BIF.Notification = {
         infoDiv.style.fontSize = '12px';
         infoDiv.style.fontWeight = 'normal';
         infoDiv.style.fontFamily = 'Arial, sans serif';
-        infoDiv.style.textAlign = 'right';
 
         infoDiv.style.cursor = 'pointer';
         infoDiv.style.zIndex = '999';
