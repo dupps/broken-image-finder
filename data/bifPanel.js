@@ -158,6 +158,10 @@ self.on('message', function(commandMessage) {
         sCode = "Request-URL Too Long";
         break;
 
+      case 503:
+        sCode = "Service Unavailable";
+        break;
+
       default:
         sCode = status;
     }
