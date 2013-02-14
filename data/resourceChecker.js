@@ -323,7 +323,8 @@ BIF.Notification = {
         infoDiv.style.right = '30px';
         infoDiv.style.padding = '10px';
 
-        infoDiv.style.maxWidth = '180px';
+        infoDiv.style.maxWidth = '220px';
+        infoDiv.style.minWidth = '80px';
         infoDiv.style.overflow = 'hidden';
         infoDiv.style.whiteSpace = 'nowrap';
         infoDiv.style.textOverflow = 'ellipsis';

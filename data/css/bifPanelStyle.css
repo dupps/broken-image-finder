@@ -24,6 +24,24 @@ body > header {
   background: linear-gradient(top, #ffffff 0%,#f1f1f1 50%,#e1e1e1 51%,#f6f6f6 100%); /* W3C */
 }
 
+#stats {
+  width: 100%;
+  padding: 8px;
+  height: 14px;
+  border-bottom: 1px #e1e1e1 solid;
+  background-color: #f6f6f6;
+}
+
+#stats span {
+  min-height: 12px;
+  font-size: 10px;
+  padding-right: 8px;
+}
+
+#stats div {
+  display: inline-block;
+}
+
 #results {
   overflow-y: scroll;
   height: 385px;

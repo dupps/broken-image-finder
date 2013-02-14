@@ -12,7 +12,7 @@
   "preferences": [
     {
       "name": "doNotify",
-      "title": "Show the notification popup?",
+      "title": "Show the Notification Popup?",
       "description": "Only disable if you don't want to get notified.",
       "type": "bool",
       "value": true
@@ -20,7 +20,7 @@
     {
       "name": "alert403",
       "title": "Alert 403 Status Codes?",
-      "description": "Should 403 Status Codes be displayed in the notification popup?",
+      "description": "Display 403 Status Codes in the Notification Popup?",
       "type": "bool",
       "value": false
     },

@@ -25,11 +25,58 @@ self.on('message', function(commandMessage) {
       detailParagraph,
       detailParagraphBreak,
       detailDivText,
-      detailDivTextSpan;
+      detailDivTextSpan,
+      statsResources,
+      statsStrikes,
+      statsContainer,
+      statsSpan,
+      statsText;
 
   // process command messages
 
-  if (commandMessage.command === 'clear-panel') {
+  if (commandMessage.command === 'stats-resources') {
+
+    statsResources = commandMessage.data;
+
+    statsContainer = document.getElementById('statsResources');
+
+    // remove old value
+
+    while (statsContainer.firstChild) {
+
+      statsContainer.removeChild(statsContainer.firstChild);
+
+    }
+
+    // insert new value
+
+    statsSpan = document.createElement('span');
+    statsText = document.createTextNode(statsResources);
+    statsSpan.appendChild(statsText);
+    statsContainer.appendChild(statsSpan);
+
+  } else if (commandMessage.command === 'stats-strikes') {
+
+    statsStrikes = commandMessage.data;
+
+    statsContainer = document.getElementById('statsStrikes');
+
+    // remove old value
+
+    while (statsContainer.firstChild) {
+
+      statsContainer.removeChild(statsContainer.firstChild);
+
+    }
+
+    // insert new value
+
+    statsSpan = document.createElement('span');
+    statsText = document.createTextNode(statsStrikes);
+    statsSpan.appendChild(statsText);
+    statsContainer.appendChild(statsSpan);
+
+  } else if (commandMessage.command === 'clear-panel') {
 
     container = document.getElementById('results');
 
