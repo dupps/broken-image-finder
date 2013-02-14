@@ -47,11 +47,6 @@ body > header {
   height: 385px;
 }
 
-#results .noResultMessage {
-  padding-left: 8px;
-  color: #808080;
-}
-
 #results .resultElement {
   min-height: 12px;
   font-size: 10px;

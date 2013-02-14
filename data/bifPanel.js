@@ -9,7 +9,6 @@ self.on('message', function(commandMessage) {
       line,
       container,
       resourceInfos,
-      infoSpan,
       infoSpanText,
       noResults,
       linkDiv,
@@ -29,7 +28,6 @@ self.on('message', function(commandMessage) {
       statsResources,
       statsStrikes,
       statsContainer,
-      statsSpan,
       statsText;
 
   // process command messages
@@ -50,10 +48,8 @@ self.on('message', function(commandMessage) {
 
     // insert new value
 
-    statsSpan = document.createElement('span');
     statsText = document.createTextNode(statsResources);
-    statsSpan.appendChild(statsText);
-    statsContainer.appendChild(statsSpan);
+    statsContainer.appendChild(statsText);
 
   } else if (commandMessage.command === 'stats-strikes') {
 
@@ -71,12 +67,12 @@ self.on('message', function(commandMessage) {
 
     // insert new value
 
-    statsSpan = document.createElement('span');
     statsText = document.createTextNode(statsStrikes);
-    statsSpan.appendChild(statsText);
-    statsContainer.appendChild(statsSpan);
+    statsContainer.appendChild(statsText);
 
   } else if (commandMessage.command === 'clear-panel') {
+
+    // clear results
 
     container = document.getElementById('results');
 
@@ -86,31 +82,36 @@ self.on('message', function(commandMessage) {
 
     }
 
-    //create a noResultMessage
+    // reset checked resources
 
-    infoSpan = document.createElement('span');
-    infoSpan.className = 'noResultMessage';
+    statsContainer = document.getElementById('statsResources');
 
-      infoSpanText = document.createTextNode('there are no broken images...');
+    while (statsContainer.firstChild) {
 
-    infoSpan.appendChild(infoSpanText);
+      statsContainer.removeChild(statsContainer.firstChild);
 
-    container.appendChild(infoSpan);
+    }
+
+    statsText = document.createTextNode('0');
+    statsContainer.appendChild(statsText);
+
+    // reset strikes
+
+    statsContainer = document.getElementById('statsStrikes');
+
+    while (statsContainer.firstChild) {
+
+      statsContainer.removeChild(statsContainer.firstChild);
+
+    }
+
+    statsText = document.createTextNode('0');
+    statsContainer.appendChild(statsText);
 
 
   } else if (commandMessage.command === 'add-resource-info') {
 
     container = document.getElementById('results');
-
-    // remove noResultMessage if it exists
-
-    noResults = document.getElementsByClassName('noResultMessage');
-
-    for (i = 0; i < noResults.length; i += 1) {
-
-      container.removeChild(noResults[i]);
-
-    }
 
     resourceInfos = commandMessage.data;
 
