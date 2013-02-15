@@ -1,4 +1,9 @@
+var BIF = BIF || {};
+
+BIF.Janitor = {};
+
 // if any command get received
+
 self.on('message', function(commandMessage) {
 
   var i,
@@ -9,7 +14,6 @@ self.on('message', function(commandMessage) {
       line,
       container,
       resourceInfos,
-      infoSpanText,
       noResults,
       linkDiv,
       urlSpan,
@@ -17,16 +21,12 @@ self.on('message', function(commandMessage) {
       urlDivText,
       statusSpan,
       statusSpanText,
-      moreInfoSpan,
-      moreInfoSpanText,
       toggleElem,
       detailDiv,
       detailParagraph,
-      detailParagraphBreak,
       detailDivText,
       detailDivTextSpan,
-      statsResources,
-      statsStrikes,
+      statsValue,
       statsContainer,
       statsText;
 
@@ -34,41 +34,19 @@ self.on('message', function(commandMessage) {
 
   if (commandMessage.command === 'stats-resources') {
 
-    statsResources = commandMessage.data;
+    statsValue = commandMessage.data;
 
     statsContainer = document.getElementById('statsResources');
 
-    // remove old value
-
-    while (statsContainer.firstChild) {
-
-      statsContainer.removeChild(statsContainer.firstChild);
-
-    }
-
-    // insert new value
-
-    statsText = document.createTextNode(statsResources);
-    statsContainer.appendChild(statsText);
+    BIF.Janitor.updateStats([statsContainer, statsValue]);
 
   } else if (commandMessage.command === 'stats-strikes') {
 
-    statsStrikes = commandMessage.data;
+    statsValue = commandMessage.data;
 
     statsContainer = document.getElementById('statsStrikes');
 
-    // remove old value
-
-    while (statsContainer.firstChild) {
-
-      statsContainer.removeChild(statsContainer.firstChild);
-
-    }
-
-    // insert new value
-
-    statsText = document.createTextNode(statsStrikes);
-    statsContainer.appendChild(statsText);
+    BIF.Janitor.updateStats([statsContainer, statsValue]);
 
   } else if (commandMessage.command === 'clear-panel') {
 
@@ -86,28 +64,13 @@ self.on('message', function(commandMessage) {
 
     statsContainer = document.getElementById('statsResources');
 
-    while (statsContainer.firstChild) {
-
-      statsContainer.removeChild(statsContainer.firstChild);
-
-    }
-
-    statsText = document.createTextNode('0');
-    statsContainer.appendChild(statsText);
+    BIF.Janitor.updateStats([statsContainer, '0']);
 
     // reset strikes
 
     statsContainer = document.getElementById('statsStrikes');
 
-    while (statsContainer.firstChild) {
-
-      statsContainer.removeChild(statsContainer.firstChild);
-
-    }
-
-    statsText = document.createTextNode('0');
-    statsContainer.appendChild(statsText);
-
+    BIF.Janitor.updateStats([statsContainer, '0']);
 
   } else if (commandMessage.command === 'add-resource-info') {
 
@@ -299,4 +262,31 @@ self.on('message', function(commandMessage) {
     console.log("unknown command");
 
   }
+
 });
+
+
+BIF.Janitor = {
+
+  updateStats: function (statsData) {
+
+    statsContainer = statsData[0];
+
+    statsValue = statsData[1];
+
+    // remove old value
+
+    while (statsContainer.firstChild) {
+
+      statsContainer.removeChild(statsContainer.firstChild);
+
+    }
+
+    // insert new value
+
+    statsText = document.createTextNode(statsValue);
+    statsContainer.appendChild(statsText);
+
+  }
+
+};
