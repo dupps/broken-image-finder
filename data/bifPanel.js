@@ -265,7 +265,6 @@ self.on('message', function(commandMessage) {
 
 });
 
-
 BIF.Janitor = {
 
   updateStats: function (statsData) {
