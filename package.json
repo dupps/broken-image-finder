@@ -20,7 +20,7 @@
     {
       "name": "alert403",
       "title": "Alert 403 Status Codes?",
-      "description": "Display 403 Status Codes in the Notification Popup?",
+      "description": "Disable if 403 Status Codes should get ignored.",
       "type": "bool",
       "value": false
     },
