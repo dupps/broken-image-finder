@@ -13,9 +13,9 @@
     {
       "name": "doNotify",
       "title": "Show the Notification Popup?",
-      "description": "Only disable if you don't want to get notified.",
+      "description": "Disable if you don't want to get notified.",
       "type": "bool",
-      "value": true
+      "value": false
     },
     {
       "name": "alert403",
