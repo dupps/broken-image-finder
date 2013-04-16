@@ -41,6 +41,8 @@ if (self) {
 
     do {
 
+      // ToDo: ignore commented out
+
       urlPosition = responseText.indexOf('url(');
 
       if (urlPosition !== -1) {
