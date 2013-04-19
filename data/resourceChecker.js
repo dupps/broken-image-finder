@@ -1,113 +1,155 @@
 var BIF = BIF || {};
 
+BIF.Init = {};
 BIF.Analyze = {};
-
 BIF.Notification = {};
-
 BIF.Helper = {};
 
-// all starts here
-// message is emited from main.js when webpage is loaded (onAttach)
+BIF.Init = {
 
-if (self) {
+  // first listen to transmitted prefs, then init()
 
-  self.port.on('getResults', function () {
+  prefs: function () {
 
-    BIF.Analyze.checkAllImgURLs();
+    self.port.on('prefTransmission', function (receivedPrefs) {
 
-    BIF.Analyze.checkAllStylesheetURLs();
+      BIF.Init.init(receivedPrefs);
 
-  });
+    })
 
-  self.port.on('gotResponseText', function (responseTextData) {
+  },
 
-    var urlPosition,
+  init: function (receivedPrefs) {
+
+    var commented,
+        foundUrl,
+        urlPosition,
         strike,
         urlEnd,
         strikeFinal,
         responseText,
+        source,
+        sourceType,
         areaToCount,
         numberOfLines,
         ancientNumberOfLines,
-        source,
-        sourceType;
+        showPopup,
+        ignoreComments;
 
-    responseText = responseTextData.responseText;
-    source = responseTextData.webResource[1];
-    sourceType = responseTextData.webResource[2];
+    showPopup = receivedPrefs[0];
+    ignoreComments = receivedPrefs[1];
 
-    // in our case this is always stylesheet text content
-    // extract image urls from this text content
+    if (self) {
 
-    do {
+      // listen to starting shot
 
-      // ToDo: ignore commented out
+      self.port.on('getResults', function () {
 
-      urlPosition = responseText.indexOf('url(');
+        BIF.Analyze.checkAllImgURLs();
 
-      if (urlPosition !== -1) {
+        BIF.Analyze.checkAllStylesheetURLs();
 
-        // count number of lines
+      });
 
-        areaToCount = responseText.substring(0, urlPosition);
+      // listen to receive responseTextData
 
-        numberOfLines = areaToCount.split('\n').length;
+      self.port.on('gotResponseText', function (responseTextData) {
 
-        if (ancientNumberOfLines) {
+        responseText = responseTextData.responseText;
+        source = responseTextData.webResource[1];
+        sourceType = responseTextData.webResource[2];
 
-          numberOfLines += ancientNumberOfLines - 1;
+        // extract image urls from stylesheet text content
+
+        do {
+
+          // handle commented out lines
+
+          if (ignoreComments === true) {
+
+            // RegEx to find comments in stylesheets
+            //commented = responseText.match(/\*[^*]*\*+([^/*][^*]*\*+)*\/);
+            commented = responseText.match(/\*[^*]*.*?\*/);
+            console.log('commented: ' + commented);
+
+            // RegEx to find URLs in stylesheets
+            foundUrl = responseText.match(/url\(((?:'|"|)[^'"]*(?:'|"|))\)/);
+            console.log('URL: ' + foundUrl);
+
+            // do some magic ...
+            // !commented && foundURL -> valid strike (line?)
+
+            urlPosition = responseText.indexOf('url(');
+
+          } else {
+
+            // normal way
+
+            urlPosition = responseText.indexOf('url(');
+
+          }
+
+          if (urlPosition !== -1) {
+
+            // count number of lines
+
+            areaToCount = responseText.substring(0, urlPosition);
+
+            numberOfLines = areaToCount.split('\n').length;
+
+            if (ancientNumberOfLines) {
+
+              numberOfLines += ancientNumberOfLines - 1;
+
+            }
+
+            strike = responseText.substring(urlPosition + 4);
+
+            urlEnd = strike.indexOf(')');
+
+            // normalize each URL
+
+            strikeFinal = BIF.Analyze.normalizeURLs(strike.substring(0, urlEnd), source);
+
+            if (typeof strikeFinal !== 'undefined') {
+
+              // check status code of found URL
+
+              self.port.emit('getHTTPStatusCode', [strikeFinal, source, sourceType, '', numberOfLines]);
+
+            }
+
+            responseText = strike.substring(urlEnd + 1);
+
+            // count every strike seperate
+
+            if (numberOfLines) {
+
+              ancientNumberOfLines = numberOfLines;
+
+            }
+
+          }
+
+        } while (urlPosition !== -1);
+
+      });
+
+      self.port.on('brokenImageFound', function (url) {
+
+        if (showPopup === true) {
+
+          BIF.Notification.showBrokenImageError(url);
 
         }
 
-        strike = responseText.substring(urlPosition + 4);
-
-        urlEnd = strike.indexOf(')');
-
-        // normalize each URL
-
-        strikeFinal = BIF.Analyze.normalizeURLs(strike.substring(0, urlEnd), source);
-
-        if (typeof strikeFinal !== 'undefined') {
-
-          // check status code of found URL
-
-          self.port.emit('getHTTPStatusCode', [strikeFinal, source, sourceType, '', numberOfLines]);
-
-        }
-
-        responseText = strike.substring(urlEnd + 1);
-
-        // count every strike seperate
-
-        if (numberOfLines) {
-
-          ancientNumberOfLines = numberOfLines;
-
-        }
-
-      }
-
-    } while (urlPosition !== -1);
-
-  });
-
-  self.port.on('showPopup', function (prefNotify) {
-
-    showPopup = prefNotify;
-
-  });
-
-  self.port.on('brokenImageFound', function (url) {
-
-    if (showPopup === true) {
-
-      BIF.Notification.showBrokenImageError(url);
+      });
 
     }
 
-  });
+  }
 
-}
+};
 
 
 BIF.Analyze = {
@@ -444,3 +486,5 @@ BIF.Helper = {
   }
 
 };
+
+BIF.Init.prefs();

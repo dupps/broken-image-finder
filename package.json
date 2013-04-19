@@ -18,6 +18,13 @@
       "value": false
     },
     {
+      "name": "commentedOut",
+      "title": "Ignore out commented lines?",
+      "description": "Should out commented lines in stylesheets get ignored?",
+      "type": "bool",
+      "value": true
+    },
+    {
       "name": "alert403",
       "title": "Alert 403 Status Codes?",
       "description": "Disable if 403 Status Codes should get ignored.",
