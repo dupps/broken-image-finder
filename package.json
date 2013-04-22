@@ -19,8 +19,8 @@
     },
     {
       "name": "commentedOut",
-      "title": "Ignore out commented lines?",
-      "description": "Should out commented lines in stylesheets get ignored?",
+      "title": "Ignore commented lines?",
+      "description": "Ignore strikes in commented lines?",
       "type": "bool",
       "value": true
     },

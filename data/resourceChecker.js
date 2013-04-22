@@ -11,17 +11,23 @@ BIF.Init = {
 
   prefs: function () {
 
-    self.port.on('prefTransmission', function (receivedPrefs) {
+    if (self) {
 
-      BIF.Init.init(receivedPrefs);
+      self.port.on('prefTransmission', function (receivedPrefs) {
 
-    })
+        BIF.Init.init(receivedPrefs);
+
+      })
+
+    }
 
   },
 
   init: function (receivedPrefs) {
 
-    var commented,
+    var regExCom,
+        regExUrl,
+        commented,
         foundUrl,
         urlPosition,
         strike,
@@ -63,31 +69,33 @@ BIF.Init = {
 
         do {
 
-          // handle commented out lines
+          // handle commented lines
 
           if (ignoreComments === true) {
 
             // RegEx to find comments in stylesheets
-            //commented = responseText.match(/\*[^*]*\*+([^/*][^*]*\*+)*\/);
-            commented = responseText.match(/\*[^*]*.*?\*/);
-            console.log('commented: ' + commented);
+            regExCom = /\/\*[^*]*\*+([^\/*][^*]*\*+)*\//g;
 
-            // RegEx to find URLs in stylesheets
-            foundUrl = responseText.match(/url\(((?:'|"|)[^'"]*(?:'|"|))\)/);
-            console.log('URL: ' + foundUrl);
+            // RegEx to find URLs
+            regExUrl = /(url\s?\([\'\"]?)([^\"\'\)]+)([\"\']?\))/g;
 
-            // do some magic ...
-            // !commented && foundURL -> valid strike (line?)
+            commented = responseText.match(regExCom);
 
-            urlPosition = responseText.indexOf('url(');
+            if (commented !== null) {
 
-          } else {
+              // sanatise comments
 
-            // normal way
+              for (var i in commented) {
 
-            urlPosition = responseText.indexOf('url(');
+                responseText = responseText.replace(commented[i], commented[i].replace(regExUrl, '\/* Code has been replaced by Broken Image Finder *\/'));
+
+              }
+
+            }
 
           }
+
+          urlPosition = responseText.indexOf('url(');
 
           if (urlPosition !== -1) {
 
@@ -414,7 +422,7 @@ BIF.Notification = {
 
       self.port.emit('showPanel');
 
-    }
+    };
 
     // remove notification after 6 sec.
 
