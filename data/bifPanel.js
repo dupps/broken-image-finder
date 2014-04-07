@@ -17,15 +17,19 @@ self.on('message', function(commandMessage) {
       noResults,
       linkDiv,
       urlSpan,
+      urlSpanText,
       urlDiv,
       urlDivText,
       statusSpan,
       statusSpanText,
+      moreLinkSpan,
+      moreLinkSpanText,
       toggleElem,
       detailDiv,
       detailParagraph,
       detailDivText,
       detailDivTextSpan,
+      sCode,
       statsValue,
       statsContainer,
       statsText;
@@ -149,32 +153,20 @@ self.on('message', function(commandMessage) {
 
     switch(status) {
 
-      case 204:
-        sCode = "No Content";
-        break;
+      case 204: sCode = "No Content"; break;
 
-      case 403:
-        sCode = "Forbidden";
-        break;
+      case 403: sCode = "Forbidden"; break;
 
-      case 404:
-        sCode = "Not Found";
-        break;
+      case 404: sCode = "Not Found"; break;
 
-      case 410:
-        sCode = "Gone";
-        break;
+      case 410: sCode = "Gone"; break;
 
-      case 414:
-        sCode = "Request-URL Too Long";
-        break;
+      case 414: sCode = "Request-URL Too Long"; break;
 
-      case 503:
-        sCode = "Service Unavailable";
-        break;
+      case 503: sCode = "Service Unavailable"; break;
 
-      default:
-        sCode = status;
+      default: sCode = status;
+
     }
 
     detailDivTextSpan = document.createElement('span');
@@ -268,6 +260,8 @@ self.on('message', function(commandMessage) {
 BIF.Janitor = {
 
   updateStats: function (statsData) {
+
+    var statsContainer, statsValue, statsText;
 
     statsContainer = statsData[0];
 
