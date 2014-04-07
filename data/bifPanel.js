@@ -259,7 +259,7 @@ self.on('message', function(commandMessage) {
 
   } else {
 
-    console.log("unknown command");
+    console.log('unknown command');
 
   }
 
